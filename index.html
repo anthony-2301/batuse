@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>Village Batuse | Restaurant, Lounge, Terrasse & Événements à Kinshasa</title>
+    
+    <!-- Tailwind CSS & Google Fonts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    
+    <script id="tailwind-config">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "batuse-red": "#8D2B1D",      /* Couleur Terracotta/Rouge du logo */
+                        "batuse-dark-red": "#601B11",
+                        "batuse-gold": "#D29E49",     /* Couleur Or/Ocre des détails */
+                        "batuse-light-gold": "#F3E3C3",
+                        "batuse-dark": "#181211",     /* Noir chaud pour l'élégance */
+                        "batuse-cream": "#FAF6F0",    /* Fond crème élégant */
+                        "batuse-card": "#FFFFFF",
+                    },
+                    fontFamily: {
+                        sans: ["Plus Jakarta Sans", "sans-serif"],
+                        title: ["Cinzel", "serif"],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #FAF6F0; color: #181211; overflow-x: hidden; }
+
+        /* === SCROLLBAR CUSTOM === */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #FAF6F0; }
+        ::-webkit-scrollbar-thumb { background: #8D2B1D; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #D29E49; }
+
+        /* === PRELOADER === */
+        #preloader {
+            position: fixed; inset: 0; background: #181211; z-index: 99999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+        .logo-pulse { animation: pulseLogo 2s infinite ease-in-out; }
+        @keyframes pulseLogo {
+            0%, 100% { transform: scale(0.96); opacity: 0.9; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+        .loaded #preloader { opacity: 0; visibility: hidden; }
+
+        /* === ANIMATIONS REVEAL === */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        
+        .scale-reveal { opacity: 0; transform: scale(0.92); transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1); }
+        .scale-reveal.active { opacity: 1; transform: scale(1); }
+
+        /* Overlay sombre dégradé */
+        .hero-overlay::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(180deg, rgba(24,18,17,0.7) 0%, rgba(24,18,17,0.85) 70%, rgba(24,18,17,1) 100%);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-batuse-gold selection:text-batuse-dark">
+
+    <!-- 1. PRELOADER -->
+    <div id="preloader">
+        <div class="flex flex-col items-center logo-pulse">
+            <div class="w-20 h-20 rounded-full border-2 border-batuse-gold/40 flex items-center justify-center p-2 mb-4 bg-batuse-red shadow-2xl">
+                <span class="material-symbols-outlined text-batuse-gold text-4xl">storefront</span>
+            </div>
+            <h2 class="font-title text-2xl font-bold tracking-widest text-white uppercase">Village <span class="text-batuse-gold">Batuše</span></h2>
+            <p class="text-xs text-batuse-gold/80 tracking-widest uppercase mt-1">Complexe Festif & Gastronomique</p>
+        </div>
+        <div class="mt-8 w-40 h-1 bg-white/10 rounded-full overflow-hidden">
+            <div class="h-full bg-batuse-gold w-full animate-pulse"></div>
+        </div>
+    </div>
+
+    <!-- 2. NAVBAR -->
+    <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-500 py-4 sm:py-5 px-4 sm:px-6 bg-transparent text-white">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            
+            <!-- LOGO -->
+            <a href="#accueil" class="flex items-center gap-2.5 sm:gap-3 group">
+                <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-batuse-red border border-batuse-gold flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform shrink-0">
+                    <span class="material-symbols-outlined text-batuse-gold text-lg sm:text-xl">roofing</span>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-title text-base sm:text-xl font-bold tracking-wider leading-none">VILLAGE <span class="text-batuse-gold">BATUŠE</span></span>
+                    <span class="text-[9px] sm:text-[10px] text-gray-300 tracking-widest uppercase font-light">Ngaliema • GB</span>
+                </div>
+            </a>
+
+            <!-- Liens PC -->
+            <div class="hidden md:flex space-x-8 items-center font-medium text-sm tracking-wide">
+                <a href="#accueil" class="hover:text-batuse-gold transition-colors">Accueil</a>
+                <a href="#espaces" class="hover:text-batuse-gold transition-colors">Nos Espaces</a>
+                <a href="#karaoke" class="hover:text-batuse-gold transition-colors flex items-center gap-1">
+                    <span class="material-symbols-outlined text-batuse-gold text-base">mic</span> Karaoké
+                </a>
+                <a href="#menu" class="hover:text-batuse-gold transition-colors">Restaurant & Bar</a>
+                <a href="#contact" class="hover:text-batuse-gold transition-colors">Contact</a>
+            </div>
+
+            <!-- CTA Droite (PC) -->
+            <div class="hidden md:flex items-center gap-4">
+                <a href="tel:+243980544925" class="bg-batuse-red text-white border border-batuse-gold/40 px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider hover:bg-batuse-gold hover:text-batuse-dark transition-all duration-300 shadow-lg flex items-center gap-2">
+                    <span class="material-symbols-outlined text-sm">call</span>
+                    0980 544 925
+                </a>
+            </div>
+
+            <!-- Burger Mobile -->
+            <button class="md:hidden text-white flex justify-end" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+                <span class="material-symbols-outlined text-2xl bg-batuse-red/90 p-2 rounded-xl backdrop-blur-md border border-batuse-gold/30">menu</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Menu Mobile Modal -->
+    <div id="mobile-menu" class="hidden fixed inset-0 bg-batuse-dark/98 backdrop-blur-2xl z-[45] pt-28 px-8 border-b border-batuse-gold/20">
+        <div class="flex flex-col space-y-6 text-center font-title">
+            <a href="#accueil" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="text-xl text-white hover:text-batuse-gold">Accueil</a>
+            <a href="#espaces" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="text-xl text-white hover:text-batuse-gold">Nos Espaces</a>
+            <a href="#karaoke" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="text-xl text-batuse-gold hover:text-white">Karaoké Weekend</a>
+            <a href="#menu" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="text-xl text-white hover:text-batuse-gold">Restaurant & Bar</a>
+            <a href="#contact" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="text-xl text-white hover:text-batuse-gold">Contact & Accès</a>
+            
+            <div class="pt-6 border-t border-white/10 flex flex-col items-center gap-2">
+                <p class="text-xs text-batuse-gold uppercase tracking-widest">Réservation & Info</p>
+                <a href="tel:+243980544925" class="text-xl font-sans font-bold text-white bg-batuse-red px-6 py-2.5 rounded-full border border-batuse-gold">0980 544 925</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. HERO SECTION -->
+    <section id="accueil" class="relative min-h-screen w-full flex items-center justify-center pt-20 pb-16 overflow-hidden hero-overlay">
+        <img class="absolute inset-0 w-full h-full object-cover object-center" src="assets/image/bar.jpg" alt="Village Batuse Kinshasa">
+
+        <div class="relative z-10 max-w-5xl mx-auto px-5 sm:px-6 text-center flex flex-col items-center">
+            
+            <div class="inline-flex items-center gap-2 bg-batuse-red/90 border border-batuse-gold/50 text-batuse-light-gold text-[10px] sm:text-xs font-semibold px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full uppercase tracking-widest mb-6 reveal backdrop-blur-md shadow-2xl">
+                <span class="material-symbols-outlined text-xs sm:text-sm text-batuse-gold">location_on</span> Kinshasa • Ngaliema Q/ GB
+            </div>
+
+            <h1 class="font-title text-3xl sm:text-6xl md:text-7xl font-bold text-white leading-tight mb-5 reveal">
+                Bienvenue au <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-batuse-gold via-amber-200 to-batuse-gold">VILLAGE BATUŠE</span>
+            </h1>
+
+            <p class="text-sm sm:text-lg text-gray-300 max-w-2xl mb-8 sm:mb-10 reveal font-light leading-relaxed">
+                Votre destination d'exception à Kinshasa. Restaurant, Terrasse Festive, Salon VIP, Lounge Bar, Boîte de Nuit, Billard et Espace Mariage.
+            </p>
+
+            <div class="flex flex-wrap justify-center gap-3 sm:gap-4 reveal">
+                <a href="#espaces" class="bg-batuse-gold text-batuse-dark font-bold px-6 py-3.5 sm:px-8 sm:py-4 text-[11px] sm:text-xs uppercase tracking-widest rounded-full shadow-lg hover:bg-white transition-all">
+                    Découvrir les espaces
+                </a>
+                <a href="#karaoke" class="bg-batuse-red text-white border border-batuse-gold/40 font-bold px-6 py-3.5 sm:px-8 sm:py-4 text-[11px] sm:text-xs uppercase tracking-widest rounded-full hover:bg-batuse-dark-red transition-all flex items-center gap-2">
+                    <span class="material-symbols-outlined text-sm text-batuse-gold">mic</span> Event Karaoké
+                </a>
+            </div>
+
+            <!-- Highlights mobile/desktop -->
+            <div class="mt-12 sm:mt-16 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 w-full max-w-4xl border-t border-white/15 pt-6 sm:pt-8 text-white/80 reveal">
+                <div class="text-center p-2 rounded-xl bg-white/5 md:bg-transparent">
+                    <p class="font-title text-batuse-gold text-lg sm:text-xl font-bold">7-en-1</p>
+                    <p class="text-[10px] sm:text-xs text-gray-300">Espaces & Ambiances</p>
+                </div>
+                <div class="text-center p-2 rounded-xl bg-white/5 md:bg-transparent">
+                    <p class="font-title text-batuse-gold text-lg sm:text-xl font-bold">Q/ GB</p>
+                    <p class="text-[10px] sm:text-xs text-gray-300">Réf. Hôtel Diplomate</p>
+                </div>
+                <div class="text-center p-2 rounded-xl bg-white/5 md:bg-transparent">
+                    <p class="font-title text-batuse-gold text-lg sm:text-xl font-bold">7j / 7</p>
+                    <p class="text-[10px] sm:text-xs text-gray-300">Cuisine & Drinks</p>
+                </div>
+                <div class="text-center p-2 rounded-xl bg-white/5 md:bg-transparent">
+                    <p class="font-title text-batuse-gold text-lg sm:text-xl font-bold">VIP</p>
+                    <p class="text-[10px] sm:text-xs text-gray-300">Salons Privés</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. SECTION NOS ESPACES & SERVICES (2 PAR 2 SUR MOBILE) -->
+    <section id="espaces" class="py-16 sm:py-24 bg-batuse-cream relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            
+            <div class="text-center mb-10 sm:mb-16 reveal">
+                <span class="text-batuse-red text-[10px] sm:text-xs font-bold uppercase tracking-widest">Un lieu unique à Kinshasa</span>
+                <h2 class="font-title text-2xl sm:text-4xl md:text-5xl font-bold text-batuse-dark mt-1">Nos Espaces & Prestations</h2>
+                <div class="w-16 sm:w-20 h-1 bg-batuse-gold mx-auto mt-3 sm:mt-4 rounded-full"></div>
+            </div>
+
+            <!-- GRID DES 7 SERVICES : 2 COLONNES SUR MOBILE, 3 SUR DESKTOP -->
+            <div class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 md:gap-8">
+                
+                <!-- 1. RESTAURANT -->
+                <div class="bg-white rounded-2xl p-4 sm:p-7 border border-gray-100 shadow-md hover:shadow-xl transition-all group reveal flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-batuse-red/10 text-batuse-red flex items-center justify-center mb-3 sm:mb-5 group-hover:bg-batuse-red group-hover:text-white transition-colors shrink-0">
+                            <span class="material-symbols-outlined text-2xl sm:text-3xl">restaurant</span>
+                        </div>
+                        <h3 class="font-title text-sm sm:text-xl font-bold text-batuse-dark mb-1.5 sm:mb-2">Restaurant</h3>
+                        <p class="text-gray-600 text-[11px] sm:text-sm leading-snug sm:leading-relaxed">
+                            Cuisine gastronomique, grillades braisées, poissons frais & spécialités locales.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 2. TERRASSE -->
+                <div class="bg-white rounded-2xl p-4 sm:p-7 border border-gray-100 shadow-md hover:shadow-xl transition-all group reveal flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-batuse-gold/20 text-batuse-dark flex items-center justify-center mb-3 sm:mb-5 group-hover:bg-batuse-gold transition-colors shrink-0">
+                            <span class="material-symbols-outlined text-2xl sm:text-3xl">deck</span>
+                        </div>
+                        <h3 class="font-title text-sm sm:text-xl font-bold text-batuse-dark mb-1.5 sm:mb-2">Terrasse</h3>
+                        <p class="text-gray-600 text-[11px] sm:text-sm leading-snug sm:leading-relaxed">
+                            Espace aéré et chaleureux pour vos soirées festives en plein air.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 3. SALON VIP -->
+                <div class="bg-white rounded-2xl p-4 sm:p-7 border border-gray-100 shadow-md hover:shadow-xl transition-all group reveal flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-batuse-red/10 text-batuse-red flex items-center justify-center mb-3 sm:mb-5 group-hover:bg-batuse-red group-hover:text-white transition-colors shrink-0">
+                            <span class="material-symbols-outlined text-2xl sm:text-3xl">chair</span>
+                        </div>
+                        <h3 class="font-title text-sm sm:text-xl font-bold text-batuse-dark mb-1.5 sm:mb-2">Salon VIP</h3>
+                        <p class="text-gray-600 text-[11px] sm:text-sm leading-snug sm:leading-relaxed">
+                            Cadre intime, climatisé et feutré avec service haut de gamme.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 4. LOUNGE BAR -->
+                <div class="bg-white rounded-2xl p-4 sm:p-7 border border-gray-100 shadow-md hover:shadow-xl transition-all group reveal flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-batuse-gold/20 text-batuse-dark flex items-center justify-center mb-3 sm:mb-5 group-hover:bg-batuse-gold transition-colors shrink-0">
+                            <span class="material-symbols-outlined text-2xl sm:text-3xl">local_bar</span>
+                        </div>
+                        <h3 class="font-title text-sm sm:text-xl font-bold text-batuse-dark mb-1.5 sm:mb-2">Lounge Bar</h3>
+                        <p class="text-gray-600 text-[11px] sm:text-sm leading-snug sm:leading-relaxed">
+                            Cocktails créatifs, bières glacées et spiritueux de prestige.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 5. BOITE DE NUIT -->
+                <div class="bg-white rounded-2xl p-4 sm:p-7 border border-gray-100 shadow-md hover:shadow-xl transition-all group reveal flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-batuse-red/10 text-batuse-red flex items-center justify-center mb-3 sm:mb-5 group-hover:bg-batuse-red group-hover:text-white transition-colors shrink-0">
+                            <span class="material-symbols-outlined text-2xl sm:text-3xl">nightlife</span>
+                        </div>
+                        <h3 class="font-title text-sm sm:text-xl font-bold text-batuse-dark mb-1.5 sm:mb-2">Boîte de Nuit</h3>
+                        <p class="text-gray-600 text-[11px] sm:text-sm leading-snug sm:leading-relaxed">
+                            Ambiance électrique avec les meilleurs DJs jusqu'au matin.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 6. ESPACE MARIAGE CIVIL -->
+                <div class="bg-white rounded-2xl p-4 sm:p-7 border border-gray-100 shadow-md hover:shadow-xl transition-all group reveal flex flex-col justify-between">
+                    <div>
+                        <div class="w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-batuse-gold/20 text-batuse-dark flex items-center justify-center mb-3 sm:mb-5 group-hover:bg-batuse-gold transition-colors shrink-0">
+                            <span class="material-symbols-outlined text-2xl sm:text-3xl">diversity_1</span>
+                        </div>
+                        <h3 class="font-title text-sm sm:text-xl font-bold text-batuse-dark mb-1.5 sm:mb-2">Mariage Civil</h3>
+                        <p class="text-gray-600 text-[11px] sm:text-sm leading-snug sm:leading-relaxed">
+                            Espace dédié aux mariages, réceptions & fêtes d'exception.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 7. BILLARD (Prend 2 colonnes sur mobile pour équilibrer la grille) -->
+                <div class="col-span-2 lg:col-span-3 bg-white rounded-2xl p-4 sm:p-7 border border-gray-100 shadow-md hover:shadow-xl transition-all group reveal">
+                    <div class="flex flex-row items-center gap-4">
+                        <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-batuse-red text-batuse-gold flex items-center justify-center shrink-0">
+                            <span class="material-symbols-outlined text-2xl sm:text-3xl">sports_bar</span>
+                        </div>
+                        <div>
+                            <h3 class="font-title text-sm sm:text-xl font-bold text-batuse-dark">Espace Billard & Jeux</h3>
+                            <p class="text-gray-600 text-[11px] sm:text-sm mt-0.5">Tables de billard professionnelles dans une ambiance conviviale.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. KARAOKÉ WEEKEND -->
+    <section id="karaoke" class="py-16 sm:py-20 bg-batuse-dark text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#D29E49_1px,transparent_1px)] [background-size:16px_16px]"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+            <div class="bg-gradient-to-r from-batuse-red via-batuse-dark-red to-batuse-dark border-2 border-batuse-gold/40 rounded-3xl p-6 sm:p-12 shadow-2xl scale-reveal">
+                
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
+                    
+                    <div class="lg:col-span-7 space-y-4 sm:space-y-6">
+                        <div class="inline-flex items-center gap-2 bg-batuse-gold text-batuse-dark font-extrabold text-[10px] sm:text-xs uppercase px-3.5 py-1.5 rounded-full tracking-wider shadow-lg">
+                            <span class="material-symbols-outlined text-xs sm:text-sm">event</span> Événement Signature
+                        </div>
+                        
+                        <h2 class="font-title text-3xl sm:text-5xl font-black text-white tracking-wide">
+                            KARAOKÉ <br><span class="text-batuse-gold">WEEKEND</span>
+                        </h2>
+
+                        <p class="text-gray-200 text-xs sm:text-base font-light leading-relaxed">
+                            Révélez l'artiste qui est en vous ! Tous les week-ends au Village Batuse, chantez vos morceaux préférés accompagnés de nos meilleures grillades et boissons fraîches.
+                        </p>
+
+                        <div class="grid grid-cols-2 gap-4 pt-2">
+                            <div class="flex items-center gap-2.5 sm:gap-3">
+                                <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-batuse-gold/20 flex items-center justify-center text-batuse-gold border border-batuse-gold/40 shrink-0">
+                                    <span class="material-symbols-outlined text-lg sm:text-xl">schedule</span>
+                                </div>
+                                <div>
+                                    <p class="text-[9px] sm:text-xs text-gray-300 uppercase">Dimanches</p>
+                                    <p class="font-bold text-white text-xs sm:text-base">Dès 16H30</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-2.5 sm:gap-3">
+                                <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-batuse-gold/20 flex items-center justify-center text-batuse-gold border border-batuse-gold/40 shrink-0">
+                                    <span class="material-symbols-outlined text-lg sm:text-xl">mic_external_on</span>
+                                </div>
+                                <div>
+                                    <p class="text-[9px] sm:text-xs text-gray-300 uppercase">Entrée</p>
+                                    <p class="font-bold text-white text-xs sm:text-base">Libre</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pt-2">
+                            <a href="tel:+243980544925" class="inline-flex items-center justify-center w-full sm:w-auto gap-2 bg-batuse-gold text-batuse-dark font-extrabold px-6 py-3.5 rounded-full text-[11px] sm:text-xs uppercase tracking-widest hover:bg-white transition-all shadow-xl">
+                                <span class="material-symbols-outlined text-sm">book_online</span> Réserver une table
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-5 relative">
+                        <div class="relative rounded-2xl overflow-hidden border-2 sm:border-4 border-batuse-gold/30 shadow-2xl group">
+                            <img src="assets/image/karaoke.jpg" alt="Karaoké Village Batuse" class="w-full h-48 sm:h-80 object-cover group-hover:scale-105 transition-transform duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-batuse-dark via-transparent to-transparent flex flex-col justify-end p-4 sm:p-6">
+                                <p class="text-batuse-gold font-title text-base sm:text-xl font-bold">Village Batuse</p>
+                                <p class="text-[10px] sm:text-xs text-gray-300">Ngaliema Q/GB • Réf: Hôtel Diplomate</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. RESTAURANT & BAR (2 PAR 2 SUR MOBILE) -->
+    <section id="menu" class="py-16 sm:py-24 bg-batuse-cream">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            
+            <div class="text-center mb-10 sm:mb-16 reveal">
+                <span class="text-batuse-red text-[10px] sm:text-xs font-bold uppercase tracking-widest">Gastronomie & Rafraîchissements</span>
+                <h2 class="font-title text-2xl sm:text-4xl md:text-5xl font-bold text-batuse-dark mt-1">À la Carte au Village</h2>
+                <div class="w-16 sm:w-20 h-1 bg-batuse-gold mx-auto mt-3 sm:mt-4 rounded-full"></div>
+            </div>
+
+            <!-- GRID DU MENU : 2 COLONNES PARFAITES SUR MOBILE (6 CARTE AU TOTAL) -->
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-6 md:gap-8">
+                
+                <!-- PLAT 1 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl border border-gray-100 reveal group flex flex-col">
+                    <div class="h-28 sm:h-48 md:h-56 overflow-hidden relative">
+                        <img src="assets/image/Poulet Rôti & Braisé.jpg" alt="Poulet Rôti" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-2 right-2 bg-batuse-red text-white text-[9px] sm:text-xs font-bold px-2 py-0.5 sm:px-3 sm:py-1 rounded-full">Incontournable</span>
+                    </div>
+                    <div class="p-3 sm:p-6 flex flex-col flex-grow">
+                        <h3 class="font-title text-xs sm:text-lg font-bold text-batuse-dark mb-1">Poulet Rôti & Braisé</h3>
+                        <p class="text-gray-500 text-[10px] sm:text-sm mb-3 leading-tight sm:leading-normal">Poulet assaisonné aux épices locales, rôti à point.</p>
+                        <div class="mt-auto pt-2 border-t border-gray-100 flex items-center justify-between">
+                            <span class="text-[9px] text-gray-400 hidden sm:inline">Avec accompagnement</span>
+                            <a href="tel:+243980544925" class="w-full sm:w-auto text-center bg-batuse-red/10 sm:bg-transparent text-batuse-red font-bold text-[10px] sm:text-xs py-1.5 sm:py-0 rounded-lg sm:rounded-none hover:text-batuse-gold transition-colors">
+                                Commander
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PLAT 2 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl border border-gray-100 reveal group flex flex-col" style="transition-delay: 100ms;">
+                    <div class="h-28 sm:h-48 md:h-56 overflow-hidden relative">
+                        <img src="assets/image/Poisson Grillé.jpg" alt="Poisson Grillé" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-3 sm:p-6 flex flex-col flex-grow">
+                        <h3 class="font-title text-xs sm:text-lg font-bold text-batuse-dark mb-1">Poisson Grillé</h3>
+                        <p class="text-gray-500 text-[10px] sm:text-sm mb-3 leading-tight sm:leading-normal">Poisson frais braisé au charbon de bois avec sauce pimentée.</p>
+                        <div class="mt-auto pt-2 border-t border-gray-100 flex items-center justify-between">
+                            <span class="text-[9px] text-gray-400 hidden sm:inline">Frites / Makemba</span>
+                            <a href="tel:+243980544925" class="w-full sm:w-auto text-center bg-batuse-red/10 sm:bg-transparent text-batuse-red font-bold text-[10px] sm:text-xs py-1.5 sm:py-0 rounded-lg sm:rounded-none hover:text-batuse-gold transition-colors">
+                                Commander
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PLAT 3 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl border border-gray-100 reveal group flex flex-col" style="transition-delay: 200ms;">
+                    <div class="h-28 sm:h-48 md:h-56 overflow-hidden relative">
+                        <img src="assets/image/Brochettes de Poulet.jpg" alt="Brochettes" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-3 sm:p-6 flex flex-col flex-grow">
+                        <h3 class="font-title text-xs sm:text-lg font-bold text-batuse-dark mb-1">Brochettes Mixed</h3>
+                        <p class="text-gray-500 text-[10px] sm:text-sm mb-3 leading-tight sm:leading-normal">Kamundele tendres et brochettes mixtes épicées.</p>
+                        <div class="mt-auto pt-2 border-t border-gray-100 flex items-center justify-between">
+                            <span class="text-[9px] text-gray-400 hidden sm:inline">Idéal Apéro</span>
+                            <a href="tel:+243980544925" class="w-full sm:w-auto text-center bg-batuse-red/10 sm:bg-transparent text-batuse-red font-bold text-[10px] sm:text-xs py-1.5 sm:py-0 rounded-lg sm:rounded-none hover:text-batuse-gold transition-colors">
+                                Commander
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PLAT 4 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl border border-gray-100 reveal group flex flex-col">
+                    <div class="h-28 sm:h-48 md:h-56 overflow-hidden relative">
+                        <img src="assets/image/sau.jpg" alt="Saucisse de Goma" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-3 sm:p-6 flex flex-col flex-grow">
+                        <h3 class="font-title text-xs sm:text-lg font-bold text-batuse-dark mb-1">Saucisse de Goma</h3>
+                        <p class="text-gray-500 text-[10px] sm:text-sm mb-3 leading-tight sm:leading-normal">Véritable saucisse servie avec des frittes .</p>
+                        <div class="mt-auto pt-2 border-t border-gray-100 flex items-center justify-between">
+                            <span class="text-[9px] text-gray-400 hidden sm:inline">Portion généreuse</span>
+                            <a href="tel:+243980544925" class="w-full sm:w-auto text-center bg-batuse-red/10 sm:bg-transparent text-batuse-red font-bold text-[10px] sm:text-xs py-1.5 sm:py-0 rounded-lg sm:rounded-none hover:text-batuse-gold transition-colors">
+                                Commander
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PLAT 5 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl border border-gray-100 reveal group flex flex-col" style="transition-delay: 100ms;">
+                    <div class="h-28 sm:h-48 md:h-56 overflow-hidden relative">
+                        <img src="assets/image/shawarma.jpg" alt="Tacos Fast Food" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-3 sm:p-6 flex flex-col flex-grow">
+                        <h3 class="font-title text-xs sm:text-lg font-bold text-batuse-dark mb-1">Tacos & Shawarma</h3>
+                        <p class="text-gray-500 text-[10px] sm:text-sm mb-3 leading-tight sm:leading-normal">Sandwichs garnis de viande marinée, frites et sauce maison.</p>
+                        <div class="mt-auto pt-2 border-t border-gray-100 flex items-center justify-between">
+                            <span class="text-[9px] text-gray-400 hidden sm:inline">Formule Snack</span>
+                            <a href="tel:+243980544925" class="w-full sm:w-auto text-center bg-batuse-red/10 sm:bg-transparent text-batuse-red font-bold text-[10px] sm:text-xs py-1.5 sm:py-0 rounded-lg sm:rounded-none hover:text-batuse-gold transition-colors">
+                                Commander
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PLAT 6 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl border border-gray-100 reveal group flex flex-col" style="transition-delay: 200ms;">
+                    <div class="h-28 sm:h-48 md:h-56 overflow-hidden relative">
+                        <img src="assets/image/ntaba.jpg" alt="Grillade de Chèvre" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-3 sm:p-6 flex flex-col flex-grow">
+                        <h3 class="font-title text-xs sm:text-lg font-bold text-batuse-dark mb-1">Mitshopo (Ntaba)</h3>
+                        <p class="text-gray-500 text-[10px] sm:text-sm mb-3 leading-tight sm:leading-normal">Viande de chèvre grillée, croustillante et parfumée.</p>
+                        <div class="mt-auto pt-2 border-t border-gray-100 flex items-center justify-between">
+                            <span class="text-[9px] text-gray-400 hidden sm:inline">Spécialité locale</span>
+                            <a href="tel:+243980544925" class="w-full sm:w-auto text-center bg-batuse-red/10 sm:bg-transparent text-batuse-red font-bold text-[10px] sm:text-xs py-1.5 sm:py-0 rounded-lg sm:rounded-none hover:text-batuse-gold transition-colors">
+                                Commander
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- SELECTION BOISSONS -->
+            <div class="mt-8 sm:mt-12 bg-white rounded-2xl p-5 sm:p-8 border border-batuse-gold/30 shadow-lg reveal flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3 sm:gap-4 text-center sm:text-left">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-batuse-gold/20 text-batuse-dark flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-xl sm:text-2xl">sports_bar</span>
+                    </div>
+                    <div>
+                        <h4 class="font-title text-sm sm:text-lg font-bold text-batuse-dark">Service Bar & Boissons Glacées</h4>
+                        <p class="text-[11px] sm:text-xs text-gray-500">Heineken, bières locales, Sodas, Cocktails et Whiskys de prestige.</p>
+                    </div>
+                </div>
+                <a href="tel:+243980544925" class="w-full sm:w-auto text-center bg-batuse-dark text-white text-[11px] sm:text-xs font-bold uppercase tracking-widest px-6 py-3 rounded-full hover:bg-batuse-red transition-colors">
+                    Passer commande
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 7. CONTACT & LOCALISATION -->
+    <section id="contact" class="py-16 sm:py-24 bg-batuse-dark text-white relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-12 backdrop-blur-md shadow-2xl reveal">
+                
+                <div class="lg:col-span-5 space-y-6 sm:space-y-8">
+                    <div>
+                        <span class="text-batuse-gold text-[10px] sm:text-xs font-bold uppercase tracking-widest">Nous rendre visite</span>
+                        <h2 class="font-title text-2xl sm:text-4xl font-bold text-white mt-1">Village Batuse</h2>
+                        <p class="text-gray-400 text-xs sm:text-sm mt-1">Avenue Moyo N°3, Commune de Ngaliema, Quartier GB, Kinshasa, RDC.</p>
+                    </div>
+
+                    <div class="space-y-4 sm:space-y-6">
+                        <div class="flex items-start gap-3 sm:gap-4">
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-batuse-red flex items-center justify-center text-batuse-gold shrink-0 border border-batuse-gold/30">
+                                <span class="material-symbols-outlined text-lg sm:text-xl">location_on</span>
+                            </div>
+                            <div>
+                                <p class="text-[10px] sm:text-xs text-batuse-gold font-bold uppercase tracking-wider">Adresse & Repère</p>
+                                <p class="text-xs sm:text-sm text-gray-200 font-medium">3, Av Moyo, Q/ GB, Ngaliema</p>
+                                <p class="text-[11px] text-gray-400">Référence : Hôtel Diplomate</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-3 sm:gap-4">
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-batuse-red flex items-center justify-center text-batuse-gold shrink-0 border border-batuse-gold/30">
+                                <span class="material-symbols-outlined text-lg sm:text-xl">call</span>
+                            </div>
+                            <div>
+                                <p class="text-[10px] sm:text-xs text-batuse-gold font-bold uppercase tracking-wider">Réservations</p>
+                                <a href="tel:+243980544925" class="text-lg sm:text-xl font-bold text-white hover:text-batuse-gold transition-colors block">
+                                    0980 544 925
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-3 sm:gap-4">
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-batuse-red flex items-center justify-center text-batuse-gold shrink-0 border border-batuse-gold/30">
+                                <span class="material-symbols-outlined text-lg sm:text-xl">mail</span>
+                            </div>
+                            <div>
+                                <p class="text-[10px] sm:text-xs text-batuse-gold font-bold uppercase tracking-wider">Adresse Email</p>
+                                <a href="mailto:batusevillage@gmail.com" class="text-xs sm:text-sm font-medium text-gray-200 hover:text-batuse-gold transition-colors block">
+                                    batusevillage@gmail.com
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-2">
+                        <a href="tel:+243980544925" class="w-full bg-batuse-gold text-batuse-dark font-extrabold text-center py-3.5 rounded-xl hover:bg-white transition-colors shadow-xl flex items-center justify-center gap-2 text-xs uppercase tracking-widest">
+                            <span class="material-symbols-outlined text-base">phone_in_talk</span> Appeler le Village Batuse
+                        </a>
+                    </div>
+                </div>
+
+        <div class="lg:col-span-7 h-64 sm:h-80 lg:h-auto rounded-2xl overflow-hidden border border-batuse-gold/30 relative">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3978.3698188164317!2d15.26!3d-4.34!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1a6a31003b583f23%3A0xc1e91d26162d4e84!2sH%C3%B4tel%20diplomate!5e0!3m2!1sfr!2scd!4v1710000000000!5m2!1sfr!2scd" 
+                    class="w-full h-full border-0 filter grayscale contrast-125 opacity-80 hover:opacity-100 transition-opacity" 
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+
+            <!-- Marqueur-->
+                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none flex flex-col items-center">
+                <div class="bg-batuse-gold text-batuse-dark text-[10px] sm:text-xs font-bold px-3 py-1.5 rounded-lg shadow-2xl mb-1 flex items-center gap-1">
+                    <span class="material-symbols-outlined text-sm">restaurant</span> BATUSE
+                </div>
+                    <div class="w-4 h-4 bg-batuse-gold rounded-full relative shadow-[0_0_15px_#eab308]">
+                        <div class="absolute inset-0 bg-batuse-gold rounded-full animate-ping opacity-75"></div>
+                    </div>
+                    </div>
+
+                <!-- Info Emplacement -->
+                <div class="absolute bottom-3 left-3 bg-batuse-dark/90 border border-batuse-gold/40 text-white px-3 py-1.5 rounded-lg text-[10px] sm:text-xs flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-batuse-gold text-sm">pin_drop</span> Q/ GB, Ngaliema (Réf. Hôtel Diplomate)
+            </div>
+        </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 8. FOOTER -->
+    <footer class="bg-black text-white py-10 border-t border-white/10 text-center px-4">
+        <div class="max-w-7xl mx-auto flex flex-col items-center">
+            
+            <a href="#accueil" class="flex items-center gap-2.5 mb-3">
+                <div class="w-9 h-9 rounded-full bg-batuse-red border border-batuse-gold flex items-center justify-center">
+                    <span class="material-symbols-outlined text-batuse-gold text-lg">roofing</span>
+                </div>
+                <span class="font-title text-xl font-bold tracking-wider">VILLAGE <span class="text-batuse-gold">BATUŠE</span></span>
+            </a>
+
+            <p class="text-gray-400 text-[11px] max-w-md mb-5">
+                Restaurant • Terrasse • Salon VIP • Lounge Bar • Boîte de Nuit • Espace Mariage Civil • Billard
+            </p>
+
+            <div class="flex justify-center space-x-5 mb-6 text-batuse-gold">
+                <a href="#" class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-batuse-gold hover:text-batuse-dark transition-colors">
+                    <span class="material-symbols-outlined text-sm">public</span>
+                </a>
+                <a href="#" class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-batuse-gold hover:text-batuse-dark transition-colors">
+                    <span class="material-symbols-outlined text-sm">photo_camera</span>
+                </a>
+                <a href="#" class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-batuse-gold hover:text-batuse-dark transition-colors">
+                    <span class="material-symbols-outlined text-sm">smart_display</span>
+                </a>
+            </div>
+
+            <div class="w-12 h-0.5 bg-batuse-gold/40 mb-5"></div>
+
+            <p class="text-[10px] sm:text-[11px] text-gray-500 uppercase tracking-widest">
+                Avenue Moyo N°3, Ngaliema, Kinshasa • Tél : 0980 544 925<br>
+                &copy; 2024 Village Batuse. Tous droits réservés.
+            </p>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            
+            // PRELOADER
+            setTimeout(() => {
+                document.body.classList.add('loaded');
+            }, 800);
+
+            // NAVBAR SCROLL EFFECT
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 40) {
+                    navbar.classList.add('bg-batuse-dark/95', 'backdrop-blur-md', 'border-b', 'border-batuse-gold/20', 'shadow-xl', 'py-2.5');
+                    navbar.classList.remove('bg-transparent', 'py-4', 'sm:py-5');
+                } else {
+                    navbar.classList.add('bg-transparent', 'py-4', 'sm:py-5');
+                    navbar.classList.remove('bg-batuse-dark/95', 'backdrop-blur-md', 'border-b', 'border-batuse-gold/20', 'shadow-xl', 'py-2.5');
+                }
+            });
+
+            // REVEAL ANIMATION
+            const revealElements = document.querySelectorAll('.reveal, .scale-reveal');
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.05,
+                rootMargin: "0px 0px -30px 0px"
+            });
+
+            revealElements.forEach(el => revealObserver.observe(el));
+        });
+    </script>
+</body>
+</html>
